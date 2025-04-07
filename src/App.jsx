@@ -1,8 +1,7 @@
-// App.js - Main Application Component
 import React, { useState, useEffect } from 'react';
-import PropertyList from './Properties/PropertyList';
-import PropertyForm from './Properties/PropertyForm';
-import Property from './Properties/Property';
+import PropertyList from './components/PropertyList';
+import PropertyForm from './components/HostForm';
+import Property from './components/PropertyDetails';
 // import PropertyCard from './Properties/PropertyCard';
 import { db } from './firebase/firebaseConfig';
 
@@ -16,6 +15,8 @@ import {
   query, 
   orderBy 
 } from 'firebase/firestore';
+import PropertyDetails from './components/PropertyDetails';
+import HostForm from './components/HostForm';
 
 function App() {
   const [properties, setProperties] = useState([]);
@@ -179,7 +180,7 @@ function App() {
     <div className="min-h-screen bg-gray-100">
       <header className="bg-white shadow-md">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-rose-500">StayBnB</h1>
+          <h1 className="text-2xl font-bold text-rose-500">THE BAOBAB HAVEN</h1>
           <div className="flex space-x-4">
             <button 
               onClick={() => setView('list')}
@@ -214,7 +215,7 @@ function App() {
             )}
             
             {view === 'detail' && currentProperty && (
-              <Property
+              <PropertyDetails
                 property={currentProperty} 
                 onEdit={() => handleEdit(currentProperty.id)} 
                 onDelete={() => deleteProperty(currentProperty.id)}
@@ -223,7 +224,7 @@ function App() {
             )}
             
             {(view === 'add' || view === 'edit') && (
-              <PropertyForm 
+              <HostForm 
                 property={isEditing ? currentProperty : null} 
                 onSubmit={isEditing ? updateProperty : addProperty} 
                 onCancel={() => isEditing ? setView('detail') : setView('list')}
@@ -235,5 +236,128 @@ function App() {
     </div>
   );
 }
-
 export default App;
+// =======
+// src/App.jsx
+// import { Routes, Route, Navigate } from "react-router-dom";
+// import { ThemeProvider, createTheme } from "@mui/material/styles";
+// import CssBaseline from "@mui/material/CssBaseline";
+// import Box from "@mui/material/Box";
+// import Home from "./pages/Home";
+// import SearchResult from "./pages/SearchResult";
+// import PropertyPage from "./pages/PropertyPage";
+// import HostForm from "./components/HostForm";
+// import HostSuccess from "./pages/HostSuccess";
+// import Login from "./pages/Login";
+// import Signup from "./pages/Signup";
+// import Header from "./components/Header";
+// import { AuthProvider } from "./context/AuthContext";
+// import ProtectedRoute from "./components/ProtectedRoute";
+// import { useAuth } from "./context/AuthContext";
+// import MyListing from "./pages/MyListing";
+
+// const theme = createTheme({
+//   palette: {
+//     primary: {
+//       main: "#FF5A5F",
+//     },
+//     secondary: {
+//       main: "#767676",
+//     },
+//     background: {
+//       default: "#FFFFFF",
+//     },
+//   },
+//   typography: {
+//     fontFamily:
+//       "Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif",
+//   },
+//   components: {
+//     MuiButton: {
+//       styleOverrides: {
+//         root: {
+//           textTransform: "none",
+//           borderRadius: "8px",
+//         },
+//       },
+//     },
+//   },
+// });
+
+// function App() {
+//   return (
+//     <ThemeProvider theme={theme}>
+//       <CssBaseline />
+//       <AuthProvider>
+//         <Box
+//           sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+//         >
+//           <Header />
+//           <Box component="main" sx={{ flexGrow: 1 }}>
+//             <Routes>
+//               <Route path="/" element={<Home />} />
+//               <Route path="/search" element={<SearchResult />} />
+//               <Route path="/property/:id" element={<PropertyPage />} />
+//               <Route path="/login" element={<Login />} />
+//               <Route path="/signup" element={<Signup />} />
+//               <Route
+//                 path="/host"
+//                 element={
+//                   <ProtectedRoute>
+//                     <HostForm />
+//                   </ProtectedRoute>
+//                 }
+//               />
+//               <Route
+//                 path="/host/dashboard"
+//                 element={
+//                   <ProtectedRoute>
+//                     <HostRouteHandler />
+//                   </ProtectedRoute>
+//                 }
+//               />
+//               <Route
+//                 path="/host/success"
+//                 element={
+//                   <ProtectedRoute>
+//                     <HostSuccess />
+//                   </ProtectedRoute>
+//                 }
+//               />
+//               <Route
+//                 path="/host-application"
+//                 element={
+//                   <ProtectedRoute>
+//                     <div>Host Application Form</div>
+//                   </ProtectedRoute>
+//                 }
+//               />
+//               // Add this to your routes in App.jsx
+//               <Route
+//                 path="/my-listing"
+//                 element={
+//                   <ProtectedRoute>
+//                     <MyListing/>
+//                   </ProtectedRoute>
+//                 }
+//               />
+//             </Routes>
+//           </Box>
+//         </Box>
+//       </AuthProvider>
+//     </ThemeProvider>
+// >>>>>>> 42724e58a76c5872ff3e8885054ed1c596bd278f
+//   );
+// }
+
+// function HostRouteHandler() {
+//   const { userData } = useAuth();
+
+//   return userData?.isHost ? (
+//     <div>Host Dashboard</div>
+//   ) : (
+//     <Navigate to="/host-application" />
+//   );
+// }
+
+// export default App;
